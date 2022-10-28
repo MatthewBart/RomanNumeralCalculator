@@ -11,18 +11,17 @@ def convertRomanToInt(rString):
         else:
             solution += romanKeyMap[rString[x]]
     convertVariable.clear()
-    return solution
+    result2.configure(text="%.4f" % solution)
 
 def convertIntegerToRoman(rInt):
-
     rInt=int(rInt)
     M = ["", "M", "MM", "MMM"]
     C = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"]
     X = ["", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"]
     I = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"]
     convertVariable.clear()
-    return M[rInt // 1000] + C[(rInt % 1000) // 100] + X[(rInt % 100) // 10] + I[rInt % 10]
-
+    solution=(M[rInt // 1000] + C[(rInt % 1000) // 100] + X[(rInt % 100) // 10] + I[rInt % 10])
+    result.configure(text="Result: %.4s" % solution)
 
 def swapFrame(frame):
     frame.tkraise()
@@ -31,8 +30,10 @@ def addToList(number):
     convertVariable.append(number)
     
 
+
 convertVariable = []
 displayRoot = Tk()  
+
 startFrame = Frame(displayRoot)
 integerToRomanFrame = Frame(displayRoot)
 romanToIntFrame = Frame(displayRoot)
@@ -40,10 +41,13 @@ displayRoot.geometry("400x400")
 displayRoot.minsize(400, 400)
 displayRoot.maxsize(400, 400)
 
-
 startFrame.grid(row=0, column=0, sticky='news')
 integerToRomanFrame.grid(row=0, column=0, sticky='news')
 romanToIntFrame.grid(row=0, column=0, sticky='news')
+
+startFrame.configure(bg='black')
+integerToRomanFrame.configure(bg='black')
+romanToIntFrame.configure(bg='black')
 
 # Start Menu
 Label(startFrame, text='Choose Calculation', height=8, width=15, fg='white', bg='black').grid(row=0,column=1)
@@ -88,7 +92,10 @@ button0.grid(row=4, column=1)
 button0 = Button(integerToRomanFrame, text=' Calculate ', fg='white', bg='black',
                 command=lambda: print(convertIntegerToRoman("".join(convertVariable))), height=3, width=15)
 button0.grid(row=5, column=1)
-Button(integerToRomanFrame, text='Return To Menu', command=lambda:swapFrame(startFrame), height=3, width=15, fg='white', bg='black').grid(row=6,column=1)
+Button(integerToRomanFrame, text='Return To Menu', command=lambda:swapFrame(startFrame), height=3, width=15, fg='white', bg='black').grid(row=6,column=0)
+Button(integerToRomanFrame, text='Clear', command=lambda:convertVariable.clear(), height=3, width=15, fg='white', bg='black').grid(row=6,column=2)
+result=Label(integerToRomanFrame, text="",height=3,width=22, fg='white', bg='black')
+result.grid(row=6,column=1)
 
 # Layout for Roman To Integer Frame
 Label(romanToIntFrame, text='Type in your Roman numeral', height=3, width=22, fg='white', bg='black').grid(row=0,column=1)
@@ -109,9 +116,10 @@ button4 = Button(romanToIntFrame, text='C', fg='white', bg='black',
                 command=lambda: addToList("C"), height=3, width=15)
 button4.grid(row=2, column=1)
 
-Button(romanToIntFrame, text='Calculate', command=lambda:print(convertRomanToInt("".join(convertVariable))),height=3,width=15, fg='white', bg='black').grid(row=2, column=2)
-Button(romanToIntFrame, text='Return To Menu', command=lambda:swapFrame(startFrame), height=3, width=15, fg='white', bg='black').grid(row=3,column=1)
-
+Button(romanToIntFrame, text='Calculate', command=lambda:convertRomanToInt("".join(convertVariable)),height=3,width=15, fg='white', bg='black').grid(row=2, column=2)
+Button(romanToIntFrame, text='Return To Menu', command=lambda:swapFrame(startFrame), height=3, width=15, fg='white', bg='black').grid(row=3,column=0)
+Button(romanToIntFrame, text='Clear', command=lambda:convertVariable.clear(), height=3, width=15, fg='white', bg='black').grid(row=3,column=2)
+result2=Label(romanToIntFrame, text="",height=3,width=22, fg='white', bg='black').grid(row=3,column=1)
 
 # Start on Menu Frame
 # Begin Loop
